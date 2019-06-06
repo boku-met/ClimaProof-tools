@@ -1,0 +1,16 @@
+name: tools
+channels:
+  - conda-forge
+dependencies:
+  - python=3.6
+  - xarray==0.11.3
+  - iris==2.2
+  - jupyter=1.0
+  - matplotlib=3.0.3
+  - netcdf4=1.5.0
+  - ipywidgets==7.4.2
+  - bokeh==1.0.4
+  - holoviews==1.11.3
+  - geoviews==1.6.2
+  - pyqt
+  - nodejs==11.11.0
