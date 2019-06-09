@@ -51,7 +51,6 @@ spinner_text = """
     height: 120px;
     animation: spin 2s linear infinite;
 }
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -71,17 +70,14 @@ done_text = """
   animation-name: animatebottom;
   animation-duration: 1s
 }
-
 @-webkit-keyframes animatebottom {
   from { bottom:-100px; opacity:0 } 
   to { bottom:0px; opacity:1 }
 }
-
 @keyframes animatebottom { 
   from{ bottom:-100px; opacity:0 } 
   to{ bottom:0; opacity:1 }
 }
-
 #myDiv {
   text-align: center;
   align: left;
@@ -103,17 +99,14 @@ error_text = """
   animation-name: animatebottom;
   animation-duration: 1s
 }
-
 @-webkit-keyframes animatebottom {
   from { bottom:-100px; opacity:0 } 
   to { bottom:0px; opacity:1 }
 }
-
 @keyframes animatebottom { 
   from{ bottom:-100px; opacity:0 } 
   to{ bottom:0; opacity:1 }
 }
-
 #myDiv {
   text-align: center;
   align: left;
@@ -141,7 +134,6 @@ def hide_spinner():
 IMPL = """
 import * as p from "core/properties"
 import {LayoutDOM, LayoutDOMView} from "models/layouts/layout_dom"
-
 export class FileInputView extends LayoutDOMView
   initialize: (options) ->
     super(options)
@@ -150,7 +142,6 @@ export class FileInputView extends LayoutDOMView
     input.onchange = () =>
       @model.value = input.value
     @el.appendChild(input)
-
 export class FileInput extends LayoutDOM
   default_view: FileInputView
   type: "FileInput"
@@ -213,28 +204,28 @@ def run_tool(event):
                 int(inp_start_year.value), int(inp_end_year.value),
                 regrid_method = inp_reg_method.value)
 
-            data_regrid = xr.open_dataset(data_regrid_fn)
+        data_regrid = xr.open_dataset(data_regrid_fn)
 
-            # Plot
-            renderer = gv.renderer('bokeh')
-            dataset_coarse = gv.Dataset(data_coarse[inp_var.value].groupby('time.season').mean('time'),
-                                        kdims=['season', 'lon', 'lat'],
-                                        crs=crs.PlateCarree())
-            dataset_regrid = gv.Dataset(data_regrid[inp_var.value].groupby('time.season').mean('time'),
-                                        kdims=['season', 'lon', 'lat'],
-                                        crs=crs.PlateCarree())
+        # Plot
+        renderer = gv.renderer('bokeh')
+        dataset_coarse = gv.Dataset(data_coarse[inp_var.value].groupby('time.season').mean('time'),
+                                    kdims=['season', 'lon', 'lat'],
+                                    crs=crs.PlateCarree())
+        dataset_regrid = gv.Dataset(data_regrid[inp_var.value].groupby('time.season').mean('time'),
+                                    kdims=['season', 'lon', 'lat'],
+                                    crs=crs.PlateCarree())
 
-            gv_plot = renderer.get_plot(
-                (dataset_coarse.to(gv.Image, ['lon','lat']).options(width=350, colorbar=True, alpha=0.6, cmap='viridis', title="Coarse data") * gv.WMTS(tiles['Wikipedia'])) + \
-                (dataset_regrid.to(gv.Image, ['lon','lat']).options(width=350, colorbar=True, alpha=0.6, cmap='viridis', title="Downscaled data") * gv.WMTS(tiles['Wikipedia']))
-            )
+        gv_plot = renderer.get_plot(
+            (dataset_coarse.to(gv.Image, ['lon','lat']).options(width=350, colorbar=True, alpha=0.6, title="Coarse data") * gv.WMTS(tiles['Wikipedia'])) + \
+            (dataset_regrid.to(gv.Image, ['lon','lat']).options(width=350, colorbar=True, alpha=0.6, title="Downscaled data") * gv.WMTS(tiles['Wikipedia']))
+        )
 
-            inp_sel_season = bmo.widgets.Select(title="Season:",
-                                    value="DJF",
-                                    options=["DJF","JJA","MAM","SON"])
-            inp_sel_season.on_change('value', lambda attrname, old, new: gv_plot.update((new,)))
-            l.children[-1] = bo.layouts.layout(bo.layouts.row([inp_sel_season]),
-                                                bo.layouts.row([gv_plot.state]))
+        inp_sel_season = bmo.widgets.Select(title="Season:",
+                                value="DJF",
+                                options=["DJF","JJA","MAM","SON"])
+        inp_sel_season.on_change('value', lambda attrname, old, new: gv_plot.update((new,)))
+        l.children[-1] = bo.layouts.layout(bo.layouts.row([inp_sel_season]),
+                                            bo.layouts.row([gv_plot.state]))
 
         div_spinner.text = done_text
     except Exception as e:
@@ -246,6 +237,12 @@ def run_tool(event):
 def upd_lat_lon(attrname, old, new):
     inp_lat.value = str(bbox_countries[new]['lat'])
     inp_lon.value = str(bbox_countries[new]['lon'])
+
+def file_inputs(attrname, old, new):
+    import pdb; pdb.set_trace()
+    pass
+
+
 
 
 # ----------------------------------------------------------------
@@ -282,9 +279,9 @@ inp_lat = bmo.widgets.TextInput(title="Latitude (Format: [MIN, MAX])",
                                 value = "[38, 47]" )
 inp_lon = bmo.widgets.TextInput(title="Longitude (Format: [MIN, MAX])",
                                 value = "[13, 25]" )
-inp_start_year = bmo.widgets.TextInput(title="Start year:",
-                                value = "2000" )
-inp_end_year = bmo.widgets.TextInput(title="End year:",
+inp_start_year = bmo.widgets.TextInput(title="End year:",
+                                value = "1999" )
+inp_end_year = bmo.widgets.TextInput(title="Start year:",
                                 value = "2010" )
 inp_var = bmo.widgets.Select(title="Variable:",
                              value='tasmax',
@@ -303,6 +300,7 @@ inp_run_tool = bmo.widgets.Button(label="Run Tool",
 
 inp_country.on_change('value', upd_lat_lon)
 
+
 # Handle on click_events (unfortunately show spinner with js due to lag otherwise)
 inp_run_tool.on_event(bo.events.ButtonClick, run_tool)
 inp_run_tool.js_on_event(
@@ -312,18 +310,24 @@ inp_run_tool.js_on_event(
 
 
 if DOCKER_CONTAINER == "True":
-    inp_src_data = bmo.Div(text="Source data", width=100)
-    div_src_data = FileInput()
+    inp_src_data = bmo.Div(text="Source data:", width=100)
+    # div_src_data = FileInput()
+    # div_src_data = bmo.Div(text="""<input id="src_data" type="file">""")
+    div_src_data = bmo.widgets.TextInput(value="/tmp")
+    # div_src_data.on_change('value', file_inputs)
 
     inp_src_topo = bmo.Div(text="Source topo", width=100)
-    div_src_topo = FileInput()
+    # div_src_topo = FileInput()
+    #div_src_topo = bmo.Div(text="""<input id="src_topo" type="file">""")
+    div_src_topo = bmo.widgets.TextInput(value="/tmp")
 
-    inp_dst_topo = bmo.Div(text="High resolution topo", width=100)
-    div_dst_topo = FileInput()
+    inp_dst_topo = bmo.Div(text="High res. Topo", width=100)
+    # div_dst_topo = FileInput()
+    #div_dst_topo = bmo.Div(text="""<input id="dst_topo" type="file">""")
+    div_dst_topo = bmo.widgets.TextInput(value="/tmp")
 
     inp_dir_dest = bmo.Div(text="", width=100)
-    #div_dir_dest = FileInput()
-    div_dir_dest = bmo.Div(text="", width=600) 
+    div_dir_dest = bmo.Div(text="", width=600)
 else:
     inp_src_data= bmo.widgets.Button(label="Source data")
     inp_src_data.on_click(lambda: gui_fname(div_src_data))
