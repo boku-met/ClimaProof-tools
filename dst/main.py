@@ -51,6 +51,7 @@ spinner_text = """
     height: 120px;
     animation: spin 2s linear infinite;
 }
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -70,14 +71,17 @@ done_text = """
   animation-name: animatebottom;
   animation-duration: 1s
 }
+
 @-webkit-keyframes animatebottom {
   from { bottom:-100px; opacity:0 } 
   to { bottom:0px; opacity:1 }
 }
+
 @keyframes animatebottom { 
   from{ bottom:-100px; opacity:0 } 
   to{ bottom:0; opacity:1 }
 }
+
 #myDiv {
   text-align: center;
   align: left;
@@ -99,14 +103,17 @@ error_text = """
   animation-name: animatebottom;
   animation-duration: 1s
 }
+
 @-webkit-keyframes animatebottom {
   from { bottom:-100px; opacity:0 } 
   to { bottom:0px; opacity:1 }
 }
+
 @keyframes animatebottom { 
   from{ bottom:-100px; opacity:0 } 
   to{ bottom:0; opacity:1 }
 }
+
 #myDiv {
   text-align: center;
   align: left;
@@ -134,6 +141,7 @@ def hide_spinner():
 IMPL = """
 import * as p from "core/properties"
 import {LayoutDOM, LayoutDOMView} from "models/layouts/layout_dom"
+
 export class FileInputView extends LayoutDOMView
   initialize: (options) ->
     super(options)
@@ -142,6 +150,7 @@ export class FileInputView extends LayoutDOMView
     input.onchange = () =>
       @model.value = input.value
     @el.appendChild(input)
+
 export class FileInput extends LayoutDOM
   default_view: FileInputView
   type: "FileInput"
