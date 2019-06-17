@@ -138,10 +138,10 @@ def create_panel(k):
     # Create table
     columns = [
         bmo.widgets.TableColumn(field="index", title="model"),
-        bmo.widgets.TableColumn(field="{}".format(inp_xaxis.value), title="{}".format(inp_xaxis.value.title()), width=65,formatter=bmo.NumberFormatter(format="0.000")),
-        bmo.widgets.TableColumn(field="{}_percentiles".format(inp_xaxis.value), title="{} Perc.".format(inp_xaxis.value.title()), width=70,formatter=bmo.NumberFormatter(format="0.000")),
-        bmo.widgets.TableColumn(field="{}".format(inp_yaxis.value), title="{}".format(inp_yaxis.value.title()), width=65,formatter=bmo.NumberFormatter(format="0.000")),
-        bmo.widgets.TableColumn(field="{}_percentiles".format(inp_yaxis.value), title="{} Perc.".format(inp_yaxis.value.title()), width=70,formatter=bmo.NumberFormatter(format="0.000")),
+        bmo.widgets.TableColumn(field="{}".format(inp_xaxis.value), title="{}".format(inp_xaxis.value.title()), width=65,formatter=bmo.NumberFormatter(format="0.0")),
+        bmo.widgets.TableColumn(field="{}_percentiles".format(inp_xaxis.value), title="{} Perc.".format(inp_xaxis.value.title()), width=70,formatter=bmo.NumberFormatter(format="0.0")),
+        bmo.widgets.TableColumn(field="{}".format(inp_yaxis.value), title="{}".format(inp_yaxis.value.title()), width=65,formatter=bmo.NumberFormatter(format="0.0")),
+        bmo.widgets.TableColumn(field="{}_percentiles".format(inp_yaxis.value), title="{} Perc.".format(inp_yaxis.value.title()), width=70,formatter=bmo.NumberFormatter(format="0.0")),
     ]
 
     data_table = bmo.widgets.DataTable(source=pdf_ts[k], columns=columns, fit_columns=False,
@@ -179,7 +179,7 @@ bbox_countries = {
     "Bosnia and Herzegovina": {"lat":[42.558, 45.268], "lon": [15.746, 19.671]},
     "Croatia": {"lat":[42.367, 46.527], "lon": [13.484, 19.391]},
     "Kosovo": {"lat":[41.8577, 43.2696], "lon": [20.0141, 21.7894]},
-    "Macedonia": {"lat":[40.867, 42.373], "lon": [20.405, 23.033]},
+    "North Macedonia": {"lat":[40.867, 42.373], "lon": [20.405, 23.033]},
     "Montenegro": {"lat":[41.864, 43.548], "lon": [18.438, 20.345]},
     "Serbia": {"lat":[41.844, 46.167], "lon": [18.859, 22.967]},
     #"Slovenia": {"lat":[44.083, 46.933], "lon": [13.427, 17.467]},
