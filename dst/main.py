@@ -225,8 +225,8 @@ def run_tool(event):
                                     crs=crs.PlateCarree())
 
         gv_plot = renderer.get_plot(
-            (dataset_coarse.to(gv.Image, ['lon','lat']).options(width=350, colorbar=True, alpha=0.6, title="Coarse data") * gv.WMTS(tiles['Wikipedia'])) + \
-            (dataset_regrid.to(gv.Image, ['lon','lat']).options(width=350, colorbar=True, alpha=0.6, title="Downscaled data") * gv.WMTS(tiles['Wikipedia']))
+            (dataset_coarse.to(gv.Image, ['lon','lat']).options(width=350, cmap='YlOrRd', colorbar=True, alpha=0.6, title="Coarse data") * gv.WMTS(tiles['Wikipedia'])) + \
+            (dataset_regrid.to(gv.Image, ['lon','lat']).options(width=350, cmap='YlOrRd', colorbar=True, alpha=0.6, title="Downscaled data") * gv.WMTS(tiles['Wikipedia']))
         )
 
         inp_sel_season = bmo.widgets.Select(title="Season:",
