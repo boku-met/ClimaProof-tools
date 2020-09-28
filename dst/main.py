@@ -88,7 +88,9 @@ done_text = """
 }
 </style>
   <h1>Done</h1>
-  <div>Check the visualization below</div>
+  <div>Check the visualization below. <b>Important Notice:</b> The background
+  map of the plot is loaded from Open Street Maps. The project team has no
+  influence on the contents provided by Open Street Maps.</div>
 </div>
 """
 
@@ -263,7 +265,7 @@ bbox_countries = {
     "Albania": {"lat":[39.583, 42.659], "lon": [19, 21.05]},
     "Bosnia and Herzegovina": {"lat":[42.558, 45.268], "lon": [15.746, 19.671]},
     "Croatia": {"lat":[42.367, 46.527], "lon": [13.484, 19.391]},
-    "Kosovo": {"lat":[41.8577, 43.2696], "lon": [20.0141, 21.7894]},
+    "Kosovo (Under UNSCR 1244/99)": {"lat":[41.8577, 43.2696], "lon": [20.0141, 21.7894]},
     "North Macedonia": {"lat":[40.867, 42.373], "lon": [20.405, 23.033]},
     "Montenegro": {"lat":[41.864, 43.548], "lon": [18.438, 20.345]},
     "Serbia": {"lat":[41.844, 46.167], "lon": [18.859, 22.967]},
