@@ -9,12 +9,23 @@ __maintainer__ = "Georg Seyerl"
 __email__ = "georg.seyerl@gmail.com"
 __status__ = "Development"
 
-
 import bokeh.plotting as bpl
 import bokeh.models as bmo
 import bokeh as bo
 import holoviews as hv
-import geoviews as gv
+try:
+    import geoviews as gv
+except TypeError as trac_err:
+    import traceback
+    import os
+    traces = traceback.extract_tb(trac_err.__traceback__)
+    fnames = [x.filename for x in traces]
+    for fn in fnames:
+        if "geoviews/plotting/bokeh/plot.py" in fn:
+            os.remove(fn)
+            curfile = os.path.dirname(os.path.abspath(__file__))+"/.plot.py"
+            os.system("cp {0} {1}".format(curfile, fn))
+    import geoviews as gv
 import geoviews.feature as gf
 from cartopy import crs
 import xarray as xr
@@ -23,6 +34,8 @@ import json
 import time
 import io
 import os
+
+    
 
 DOCKER_CONTAINER = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 if not DOCKER_CONTAINER == "True":
@@ -261,7 +274,7 @@ def file_inputs(attrname, old, new):
 # ----------------------------------------------------------------
 
 bbox_countries = {
-    "Whole Domain": {"lat":[38, 47], "lon": [13, 25]},
+    "Whole Domain": {"lat":[39.01, 46.9], "lon": [13.51, 23.9]},
     "Albania": {"lat":[39.583, 42.659], "lon": [19, 21.05]},
     "Bosnia and Herzegovina": {"lat":[42.558, 45.268], "lon": [15.746, 19.671]},
     "Croatia": {"lat":[42.367, 46.527], "lon": [13.484, 19.391]},
@@ -287,16 +300,16 @@ inp_country = bmo.widgets.Select(title="Country",
                                  value = "Whole Domain",
                                  options = list(bbox_countries.keys()))
 inp_lat = bmo.widgets.TextInput(title="Latitude (Format: [MIN, MAX])",
-                                value = "[38, 47]" )
+                                value = "[39.01, 46.9]" )
 inp_lon = bmo.widgets.TextInput(title="Longitude (Format: [MIN, MAX])",
-                                value = "[13, 25]" )
+                                value = "[13.51, 23.9]" )
 inp_start_year = bmo.widgets.TextInput(title="Start year:",
                                 value = "1999" )
 inp_end_year = bmo.widgets.TextInput(title="End year:",
                                 value = "2010" )
 inp_var = bmo.widgets.Select(title="Variable:",
                              value='tasmax',
-                             options=["tasmax", "tasmin", "pr", "rsds", "hurs", "sfcWind"])
+                             options=["tasmax", "tasmin", "tmean", "pr", "rsds", "hurs", "sfcWind"])
 
 inp_data_type = bmo.widgets.Select(title="Data Type:",
                                    value="obs",
